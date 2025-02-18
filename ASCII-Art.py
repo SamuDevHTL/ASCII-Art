@@ -21,9 +21,9 @@ def open_file_dialog(file_types):
 def choose_ascii_set():
     """Prompt user to select ASCII contrast level."""
     print("\nChoose ASCII contrast level:")
-    print("1 - High contrast (bold, simple)")
-    print("2 - Medium contrast (detailed)")
-    print("3 - Low contrast (minimalist)")
+    print("1 - High contrast")
+    print("2 - Medium contrast")
+    print("3 - Low contrast")
     
     while True:
         choice = input("Enter 1, 2, or 3: ").strip()
@@ -63,7 +63,7 @@ def video_to_ascii(video_path, ascii_chars, output_width=150):
         ascii_frame = process_frame_to_ascii(frame, ascii_chars, output_width)
         display_ascii(ascii_frame)
 
-        if cv2.waitKey(30) & 0xFF == ord("q"):
+        if cv2.getWindowProperty("ASCII Art", cv2.WND_PROP_VISIBLE) < 1:
             break
 
     cap.release()
@@ -85,7 +85,7 @@ def webcam_to_ascii(ascii_chars, output_width=150):
         ascii_frame = process_frame_to_ascii(frame, ascii_chars, output_width)
         display_ascii(ascii_frame)
 
-        if cv2.waitKey(1) & 0xFF == ord("q"):  # Press 'Q' to exit
+        if cv2.getWindowProperty("ASCII Art", cv2.WND_PROP_VISIBLE) < 1:
             break
 
     cap.release()
@@ -117,11 +117,11 @@ def display_ascii(ascii_matrix, font_size=10):
 
 # Main function for user input
 if __name__ == "__main__":
-    choice = input("Enter 'image' for image, 'video' for video, or 'webcam' for live ASCII: ").strip().lower()
+    choice = input("Enter 'i' for image, 'v' for video, 'w' for webcam ->  ").strip().lower()
     
     ascii_chars = choose_ascii_set()  # Let user select ASCII contrast
 
-    if choice == "image":
+    if choice == "i":
         image_path = open_file_dialog([("Image Files", "*.png;*.jpg;*.jpeg;*.bmp;*.gif")])
         if image_path:
             image_to_ascii(image_path, ascii_chars)
@@ -129,13 +129,13 @@ if __name__ == "__main__":
             cv2.destroyAllWindows()
         else:
             print("No file selected.")
-    elif choice == "video":
+    elif choice == "v":
         video_path = open_file_dialog([("Video Files", "*.mp4;*.avi;*.mov;*.mkv")])
         if video_path:
             video_to_ascii(video_path, ascii_chars)
         else:
             print("No file selected.")
-    elif choice == "webcam":
+    elif choice == "w":
         print("Starting webcam ASCII... Press 'Q' to exit.")
         webcam_to_ascii(ascii_chars)
     else:
