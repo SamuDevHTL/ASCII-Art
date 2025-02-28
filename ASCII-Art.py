@@ -136,7 +136,7 @@ if __name__ == "__main__":
         else:
             print("No file selected.")
     elif choice == "w":
-        print("Starting webcam ASCII... Press 'Q' to exit.")
+        print("Starting webcam ASCII... ")
         webcam_to_ascii(ascii_chars)
     else:
         print("Invalid choice.")
