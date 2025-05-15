@@ -41,7 +41,7 @@ def image_to_ascii(image_path, ascii_chars, output_width=150):
         img = img.resize((output_width, new_height))
 
         pixels = np.array(img)
-        ascii_image = [[ascii_chars[pixel * len(ascii_chars) // 256] for pixel in row] for row in pixels]
+        ascii_image = [[ascii_chars[int(pixel) * len(ascii_chars) // 256] for pixel in row] for row in pixels]
 
         display_ascii(ascii_image)
     except Exception as e:
@@ -99,7 +99,7 @@ def process_frame_to_ascii(frame, ascii_chars, output_width):
     new_height = int(output_width * aspect_ratio * 0.55)
     resized_frame = cv2.resize(gray_frame, (output_width, new_height))
 
-    ascii_frame = [[ascii_chars[pixel * len(ascii_chars) // 256] for pixel in row] for row in resized_frame]
+    ascii_frame = [[ascii_chars[int(pixel) * len(ascii_chars) // 256] for pixel in row] for row in resized_frame]
     return ascii_frame
 
 def display_ascii(ascii_matrix, font_size=10):
@@ -140,3 +140,4 @@ if __name__ == "__main__":
         webcam_to_ascii(ascii_chars)
     else:
         print("Invalid choice.")
+
